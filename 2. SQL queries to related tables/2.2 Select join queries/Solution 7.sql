@@ -29,3 +29,24 @@ HAVING book.genre_id IN (SELECT right_query.genre_id
                                                                    GROUP BY genre_id) right_query
                                                       ON left_query.amount = right_query.amount)
 ORDER BY title
+
+
+WITH the_amount AS (
+  SELECT genre_id, SUM(amount) AS amount_sum
+    FROM book
+   GROUP BY genre_id
+   ORDER BY SUM(amount) DESC
+   LIMIT 1
+), the_genres AS (
+  SELECT genre_id
+    FROM book
+   GROUP BY genre_id
+  HAVING SUM(amount) IN (SELECT amount_sum FROM the_amount)
+)
+   
+SELECT title, name_author, name_genre, amount, price, amount
+  FROM book INNER JOIN author USING(author_id)
+            INNER JOIN genre  USING(genre_id)
+ WHERE genre_id IN (SELECT genre_id FROM the_genres)
+ ORDER BY title
+
