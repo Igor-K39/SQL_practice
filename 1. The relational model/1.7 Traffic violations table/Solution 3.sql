@@ -4,6 +4,17 @@
    При этом суммы заносить только в пустые поля столбца sum_fine.
 */
 
+/* 
+   MySQL
+
+UPDATE fine
+   SET sum_fine = (SELECT sum_fine 
+                     FROM traffic_violation AS tv
+                    WHERE tv.violation = fine.violation)
+   WHERE isNull(sum_fine)
+ */
+
+/* Postgres */
 UPDATE fine
    SET sum_fine = (SELECT sum_fine 
                      FROM traffic_violation AS tv

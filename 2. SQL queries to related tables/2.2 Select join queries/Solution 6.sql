@@ -17,7 +17,7 @@ SELECT name_author
 HAVING COUNT(genre_id) = 1
  ORDER BY name_author;
  
-SELECT name_author, count(distinct(genre_id))
+SELECT name_author, COUNT(DISTINCT(genre_id))
   FROM author INNER JOIN book ON author.author_id = book.author_id
  GROUP BY name_author
-HAVING count(distinct(genre_id)) = 1;
+HAVING COUNT(DISTINCT(genre_id)) = 1;

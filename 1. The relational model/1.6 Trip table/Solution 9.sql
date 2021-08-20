@@ -7,6 +7,18 @@
    по фамилиям сотрудников, а затем по убыванию суммы суточных.
 */
 
+/* 
+   MySQL 
+
+SELECT name, city, date_first, per_diem * (DATEDIFF(date_last, date_first) + 1) AS Сумма
+  FROM trip
+ WHERE MONTHNAME(date_first) = "February"
+    OR MONTHNAME(date_first) = "March"
+ ORDER BY name, Сумма DESC
+
+ */
+
+/* Postgres */
 SELECT name, city, date_first, 
        per_diem * (DATE_PART('day', date_last::timestamp - date_first::timestamp) + 1) AS Сумма
   FROM trip

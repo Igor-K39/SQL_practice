@@ -4,6 +4,18 @@
    в отсортированном по возрастанию количества виде. Последний столбец назвать Количество.
 */
 
+/* 
+   MySQL
+
+SELECT name_author, SUM(amount) AS Количество
+  FROM book 
+       RIGHT JOIN author ON book.author_id = author.author_id
+ GROUP BY name_author
+HAVING SUM(book.amount) < 10 OR isNull(SUM(book.amount))
+ ORDER BY Количество 
+*/
+
+/* Postgres */
 SELECT name_author, SUM(amount) AS Количество
   FROM book 
        RIGHT JOIN author ON book.author_id = author.author_id

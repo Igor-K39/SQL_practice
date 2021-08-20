@@ -6,6 +6,19 @@
    по убыванию длительности поездки, а потом по убыванию названий городов.
 */
 
+/* 
+   MySQL
+
+SELECT name, city, DATEDIFF(date_last, date_first) + 1 AS Длительность
+  FROM trip
+ WHERE (city <> "Москва") 
+   AND (city <> "Санкт-Петербург")
+ ORDER BY Длительность DESC, city DESC 
+*/
+
+/* 
+   Postgres
+*/
 SELECT name, city,  DATE_PART('day', date_last::timestamp - date_first::timestamp) + 1 AS Длительность
   FROM trip
  WHERE (city <> 'Москва') 

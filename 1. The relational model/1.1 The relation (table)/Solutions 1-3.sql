@@ -1,4 +1,4 @@
-# task_1
+/* task_1 MySQL 
 CREATE TABLE book(
     book_id INT PRIMARY KEY AUTO_INCREMENT,
     title   VARCHAR(50),
@@ -6,12 +6,22 @@ CREATE TABLE book(
     price   DECIMAL(8, 2),
     amount  INT
 );
+*/
 
-# task_2
+/* task_1 Postgres */
+CREATE TABLE book(
+    book_id SERIAL PRIMARY KEY,
+    title   VARCHAR(50),
+    author  VARCHAR(30),
+    price   DECIMAL(8, 2),
+    amount  INT
+);
+
+/* task_2 */
 INSERT INTO book(title, author, price, amount) 
 VALUES ("Мастер и Маргарита", "Булгаков М.А.", 670.99, 3);
 
-# task_3
+/* task_3 */
 INSERT INTO book(title, author, price, amount)
 VALUES ("Белая гвардия", "Булгаков М.А.", 540.50, 5),
        ("Идиот", "Достоевский Ф.М.", 460.00, 10),

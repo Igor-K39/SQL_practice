@@ -15,6 +15,9 @@
    +-----------------------+------------------+------------+--------+--------+
 */
 
+/*
+   MySQL
+
 SELECT title, name_author, name_genre, price, amount
   FROM book INNER JOIN author ON book.author_id = author.author_id
             INNER JOIN genre  ON book.genre_id = genre.genre_id
@@ -29,8 +32,9 @@ HAVING book.genre_id IN (SELECT right_query.genre_id
                                                                    GROUP BY genre_id) right_query
                                                       ON left_query.amount = right_query.amount)
 ORDER BY title
+*/
 
-
+/* Postgres */
 WITH the_amount AS (
   SELECT genre_id, SUM(amount) AS amount_sum
     FROM book
