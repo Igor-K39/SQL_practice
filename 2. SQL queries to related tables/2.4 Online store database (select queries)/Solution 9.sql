@@ -7,43 +7,17 @@
    MySQL
 
 SELECT name_genre, SUM(buy_book.amount) AS Количество
-  FROM stepik.buy_book INNER JOIN stepik.book  USING(book_id)
-                       INNER JOIN stepik.genre USING(genre_id)
- GROUP BY name_genre, genre_id
-HAVING genre_id IN (SELECT genre_id 
-  FROM ((SELECT genre_id, SUM(buy_book.amount) AS amount
-  		  FROM stepik.buy_book INNER JOIN book USING(book_id)
-		 GROUP BY title, genre_id) genres
-		
-		INNER JOIN
-		
-		(SELECT SUM(buy_book.amount) AS amount
-  		  FROM stepik.buy_book INNER JOIN book USING(book_id)
- 		 GROUP BY title
- 		 ORDER BY amount DESC
- 		 LIMIT 1) amounts
-	   
-	   ON genres.amount = amounts.amount))
+  FROM buy_book JOIN book  USING(book_id)
+  			    JOIN genre USING(genre_id)
+ GROUP BY name_genre
+ ORDER BY 2 DESC
+ LIMIT 1
 */
 
 /* Postgres */
-WITH amounts AS (
-         SELECT SUM(buy_book.amount) AS amount
-           FROM stepik.buy_book INNER JOIN book USING(book_id)
- 	      GROUP BY title
- 	      ORDER BY amount DESC
- 	      LIMIT 1),
-	 
-	 genres AS (
-	     SELECT genre_id, SUM(buy_book.amount) AS amount
-  		   FROM stepik.buy_book INNER JOIN book USING(book_id)
-		  GROUP BY title, genre_id
-	 )
-	 
-SELECT name_genre, SUM(buy_book.amount) AS Количество
-  FROM stepik.buy_book INNER JOIN stepik.book  USING(book_id)
-                       INNER JOIN stepik.genre USING(genre_id)
- GROUP BY name_genre, genre_id
- HAVING genre_id IN (SELECT genre_id
-					   FROM amounts INNER JOIN genres ON amounts.amount = genres.amount);
-  			     
+SELECT name_genre, SUM(buy_book.amount) AS bought
+  FROM stepik.buy_book JOIN stepik.book  USING(book_id)
+  					   JOIN stepik.genre USING(genre_id)
+ GROUP BY name_genre
+ ORDER BY 2 DESC
+ LIMIT 1
